@@ -1,0 +1,73 @@
+<template>
+  <v-layout row justify-center>
+    <v-dialog v-model="dialog" max-width="500px">
+      <v-btn slot="activator" color="pink" dark>
+        Add member
+        <v-icon right>add_to_queue</v-icon>
+      </v-btn>
+      <v-card>
+        <v-card-title>
+          <span class="headline">Add member</span>
+        </v-card-title>
+        <v-card-text>
+          <v-form ref="form" v-model="valid" lazy-validation>
+            <v-container grid-list-md>
+              <v-layout wrap>
+                <v-flex xs12>
+                  <image-uploader/>
+                </v-flex>
+                <v-flex xs12>
+                  <v-text-field prepend-icon="label" label="Name"
+                    v-model="memberName"
+                    :rules="[v => !!v || 'Give the member a name']"
+                  />
+                </v-flex>
+              </v-layout>
+            </v-container>
+          </v-form>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" flat @click.native="dialog = false">Close</v-btn>
+          <v-btn color="blue darken-1" flat @click.native="addMember">Save</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </v-layout>
+</template>
+<script>
+import ImageUploader from '@/components/utils/ImageUploader'
+import { EventBus } from '@/js/eventbus'
+
+export default {
+  name: 'add-member-modal',
+  components: { ImageUploader },
+  created: function () {
+    EventBus.$on('member-image-uploaded-event', (data) => {
+      this.imageData = data
+    })
+  },
+  methods: {
+    addMember: function () {
+      if (!this.$refs.form.validate()) {
+        return
+      }
+      this.dialog = false
+      EventBus.$emit('add-member-to-group-event', {
+        name: this.memberName,
+        imageData: this.imageData
+      })
+      this.$refs.form.reset()
+    }
+  },
+  data: function () {
+    return {
+      dialog: this.visible,
+      valid: false,
+      memberName: '',
+      imageData: null
+    }
+  }
+}
+</script>
+
