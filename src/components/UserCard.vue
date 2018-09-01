@@ -1,5 +1,16 @@
 <template>
-  <v-card class="user-card">
+  <v-card class="user-card" @mouseover="hovered = true" @mouseout="hovered = false">
+    <v-fab-transition>
+      <v-btn
+      class="user-card__delete-member-button"
+        absolute right icon small
+        v-show="hovered"
+        transition="scale-transition" origin="center center"
+        @click="selfDelete"
+      >
+        <v-icon>delete</v-icon>
+      </v-btn>
+    </v-fab-transition>
     <v-container class="user-card__container">
       <v-layout column align-center>
         <img class="user-card__image" :src="img" alt="Member image">
@@ -68,6 +79,15 @@ export default {
   methods: {
     addButtonClicked: function () {
       EventBus.$emit('open-spending-modal', this.id)
+    },
+    selfDelete: function () {
+      // API CALL DELETE MEMBER
+      EventBus.$emit('delete-member-event', this.id)
+    }
+  },
+  data: function () {
+    return {
+      hovered: false
     }
   }
 }
@@ -76,6 +96,7 @@ export default {
 
   .user-card {
     background: #545454;
+    cursor: pointer;
   }
 
   .user-card__image {

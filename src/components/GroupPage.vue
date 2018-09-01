@@ -7,9 +7,11 @@
             v-for="(item, index) in items" :key="index"
             xs12 sm6
           >
-            <user-card v-bind="item" />
+            <transition name="remove-member">
+              <user-card v-bind="item" v-show="item.visible"/>
+            </transition>
           </v-flex>
-          <v-flex xs12 sm-8 offset-sm2>
+          <v-flex xs12 sm8 offset-sm2>
             <add-member-modal />
           </v-flex>
         </v-layout>
@@ -48,8 +50,18 @@ export default {
         id: this.items[this.items.length - 1].id + 1,
         name: data.name,
         img: 'https://yt3.ggpht.com/a-/ACSszfH-TGySV8bcz1a_rF-2cS0XVvkDEaA27r6qwQ=s900-mo-c-c0xffffffff-rj-k-no',
-        spendings: []
+        spendings: [],
+        visible: true
       })
+    })
+    EventBus.$on('delete-member-event', (data) => {
+      const item = this.items.filter(item => {
+        return item.id === data
+      })
+      item[0].visible = false
+      window.setTimeout(() => {
+        this.items.splice(this.items.indexOf(item[0]), 1)
+      }, 300)
     })
   },
   computed: {
@@ -71,7 +83,8 @@ export default {
             { title: 'Courses casino', amount: 12.89, date: '28/08/2018' },
             { title: 'Courses super u', amount: 21.02, date: '29/08/2018' },
             { title: 'Courses intermarché', amount: 42, date: '23/08/2018' }
-          ]
+          ],
+          visible: true
         },
         {
           id: 2,
@@ -83,31 +96,37 @@ export default {
             { title: 'Courses leclerc', amount: 45, date: '27/08/2018' },
             { title: 'Courses casino', amount: 12.89, date: '28/08/2018' },
             { title: 'Courses super u', amount: 21.02, date: '29/08/2018' },
-            { title: 'Courses intermarché', amount: 42, date: '23/08/2018' }]
+            { title: 'Courses intermarché', amount: 42, date: '23/08/2018' }
+          ],
+          visible: true
         },
         {
           id: 3,
           name: 'Yves',
           img: 'https://yt3.ggpht.com/a-/ACSszfH-TGySV8bcz1a_rF-2cS0XVvkDEaA27r6qwQ=s900-mo-c-c0xffffffff-rj-k-no',
-          spendings: []
+          spendings: [],
+          visible: true
         },
         {
           id: 4,
           name: 'Kevin',
           img: 'https://yt3.ggpht.com/a-/ACSszfH-TGySV8bcz1a_rF-2cS0XVvkDEaA27r6qwQ=s900-mo-c-c0xffffffff-rj-k-no',
-          spendings: []
+          spendings: [],
+          visible: true
         },
         {
           id: 5,
           name: 'Jacques',
           img: 'https://yt3.ggpht.com/a-/ACSszfH-TGySV8bcz1a_rF-2cS0XVvkDEaA27r6qwQ=s900-mo-c-c0xffffffff-rj-k-no',
-          spendings: []
+          spendings: [],
+          visible: true
         },
         {
           id: 6,
           name: 'Adrien',
           img: 'https://yt3.ggpht.com/a-/ACSszfH-TGySV8bcz1a_rF-2cS0XVvkDEaA27r6qwQ=s900-mo-c-c0xffffffff-rj-k-no',
-          spendings: []
+          spendings: [],
+          visible: true
         }
       ],
       modalVisible: false
@@ -118,6 +137,11 @@ export default {
 <style scoped>
   .group-page__grid-container {
     padding-top: 0;
+  }
+  
+  .remove-member-leave-to {
+    transition: all ease-in-out 300ms;
+    opacity: 0;
   }
 </style>
 
