@@ -31,7 +31,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" flat @click.native="addCard()" :disabled="!valid">Add</v-btn>
+          <v-btn color="blue darken-1" flat @click.native="addCard()" :disabled="!valid" type="submit">Add</v-btn>
         </v-card-actions>
       </v-form>
     </v-card>

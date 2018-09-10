@@ -118,6 +118,11 @@ export default {
       return filteredResult
     }
   },
+  watch: {
+    debtItems: function (newValue, oldValue) {
+      this.items = newValue
+    }
+  },
   methods: {
     filterClicked: function (userId) {
       this.filtered = userId

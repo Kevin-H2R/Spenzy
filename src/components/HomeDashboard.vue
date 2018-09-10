@@ -5,6 +5,14 @@
         <v-container fluid>
           <v-layout row wrap>
             <v-flex
+              v-if="loading"
+              v-for="i in 6"
+              :key="i"
+              xs12 sm6 md4 lg3
+            >
+              <loading-area marged/>
+            </v-flex>
+            <v-flex
               v-for="(item, index) in items"
               :key="index"
               xs12 sm6 md4 lg3
@@ -36,21 +44,22 @@
 </template>
 <script>
 import AddCardModal from '@/components/AddCardModal'
+import LoadingArea from '@/components/utils/LoadingArea'
 import { EventBus } from '@/js/eventbus'
 import axios from 'axios'
 import { api } from '@/js/config'
 
 export default {
   name: 'home-dashboard',
-  components: {AddCardModal},
+  components: { AddCardModal, LoadingArea },
   created: function () {
     EventBus.$on('add-card-event', (data) => {
       this.items.push({name: data, personCount: 0})
     })
-
     axios.get(api + '/parties')
     .then((response) => {
       this.items = response.data
+      this.loading = false
     })
     .catch(function (error) {
       console.log(error)
@@ -59,7 +68,8 @@ export default {
   data: function () {
     return {
       fab: false,
-      items: []
+      items: [],
+      loading: true
     }
   }
 }

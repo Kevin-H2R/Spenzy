@@ -4,6 +4,14 @@
       <v-container fluid grid-list-sm class="group-page__grid-container">
         <v-layout row wrap>
           <v-flex
+            v-if="loading"
+            v-for="i in 4"
+            :key="i"
+            xs12 sm6
+          >
+            <loading-area :height="225" />
+          </v-flex>
+          <v-flex
             v-for="(item, index) in items" :key="index"
             xs12 sm6
           >
@@ -33,21 +41,21 @@
 import UserCard from '@/components/UserCard'
 import AddSpendingModal from '@/components/AddSpendingModal'
 import DebtList from '@/components/DebtList'
-import { EventBus } from '@/js/eventbus'
 import AddMemberModal from '@/components/AddMemberModal'
+import LoadingArea from '@/components/utils/LoadingArea'
+import { EventBus } from '@/js/eventbus'
 import axios from 'axios'
 import { api } from '@/js/config'
 
 export default {
   name: 'group-page',
-  components: { UserCard, AddSpendingModal, DebtList, AddMemberModal },
+  components: { UserCard, AddSpendingModal, DebtList, AddMemberModal, LoadingArea },
   created: function () {
     EventBus.$on('add-spending-event', (data) => {
       const item = this.items.filter(item => item.id === data.id)[0]
       item.spendings.push(data.spending)
     })
     EventBus.$on('add-member-to-group-event', (data) => {
-      // API CALL Add member to group
       this.items.push({
         id: data.id,
         name: data.name,
@@ -65,10 +73,10 @@ export default {
         this.items.splice(this.items.indexOf(item[0]), 1)
       }, 300)
     })
-
     axios.get(`${api}/parties/${this.$route.params.id}`)
     .then((response) => {
       this.items = response.data
+      this.loading = false
     })
     .catch((error) => {
       console.log(error)
@@ -79,10 +87,13 @@ export default {
       return this.items.map(data => { return {id: data.id, name: data.name} })
     }
   },
+  beforeUpdate: function () {
+  },
   data: function () {
     return {
       items: [],
-      modalVisible: false
+      modalVisible: false,
+      loading: true
     }
   }
 }

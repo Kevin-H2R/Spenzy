@@ -49,6 +49,8 @@
 </template>
 <script>
 import { EventBus } from '@/js/eventbus'
+import axios from 'axios'
+import { api } from '@/js/config'
 export default {
   name: 'user-card',
   props: {
@@ -83,7 +85,12 @@ export default {
       EventBus.$emit('open-spending-modal', this.id)
     },
     selfDelete: function () {
-      // API CALL DELETE MEMBER
+      axios.delete(`${api}/members/${this.id}`)
+      .then((response) => {
+      })
+      .catch((error) => {
+        console.log(error)
+      })
       EventBus.$emit('delete-member-event', this.id)
     },
     formatPrice: function (value) {

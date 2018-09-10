@@ -6,31 +6,31 @@
         <v-icon right>add_to_queue</v-icon>
       </v-btn>
       <v-card>
-        <v-card-title>
-          <span class="headline">Add member</span>
-        </v-card-title>
-        <v-card-text>
-          <v-form ref="form" v-model="valid" lazy-validation>
-            <v-container grid-list-md>
-              <v-layout wrap>
-                <v-flex xs12>
-                  <image-uploader/>
-                </v-flex>
-                <v-flex xs12>
-                  <v-text-field prepend-icon="label" label="Name"
-                    v-model="memberName"
-                    :rules="[v => !!v || 'Give the member a name']"
-                  />
-                </v-flex>
-              </v-layout>
-            </v-container>
-          </v-form>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" flat @click.native="dialog = false">Close</v-btn>
-          <v-btn color="blue darken-1" flat @click.native="addMember">Save</v-btn>
-        </v-card-actions>
+        <v-form ref="form" v-model="valid" lazy-validation>
+          <v-card-title>
+            <span class="headline">Add member</span>
+          </v-card-title>
+          <v-card-text>
+              <v-container grid-list-md>
+                <v-layout wrap>
+                  <v-flex xs12>
+                    <image-uploader/>
+                  </v-flex>
+                  <v-flex xs12>
+                    <v-text-field prepend-icon="label" label="Name"
+                      v-model="memberName"
+                      :rules="[v => !!v || 'Give the member a name']"
+                    />
+                  </v-flex>
+                </v-layout>
+              </v-container>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" flat @click.native="dialog = false">Close</v-btn>
+            <v-btn color="blue darken-1" flat @click.native="addMember" type="submit">Add</v-btn>
+          </v-card-actions>
+        </v-form>
       </v-card>
     </v-dialog>
   </v-layout>

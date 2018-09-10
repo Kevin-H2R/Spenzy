@@ -57,7 +57,7 @@
 
     <v-content>
       <v-container fill-height>
-        <router-view/>
+        <router-view :key="$route.fullPath"/>
       </v-container>
     </v-content>
     <v-footer app>
