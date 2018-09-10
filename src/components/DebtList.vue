@@ -15,7 +15,7 @@
             </v-list-tile-content>
           </v-list-tile-avatar>
           <v-list-tile-content>
-            <v-list-tile-title class="debt-list__middle-text">{{ item.amount }}€</v-list-tile-title>
+            <v-list-tile-title class="debt-list__middle-text">{{ formatPrice(item.amount) }}€</v-list-tile-title>
             <v-list-tile-sub-title class="debt-list__middle-text">
               <v-icon>arrow_right_alt</v-icon>
             </v-list-tile-sub-title>
@@ -106,6 +106,9 @@ export default {
         resultActions.push({giver: giver.user, receiver: receiver.user, amount: receiver.due})
       }
       const filteredResult = resultActions.filter(data => {
+        if (data.amount === 0) {
+          return false
+        }
         if (this.filtered.length === 0) {
           return true
         }
@@ -118,6 +121,9 @@ export default {
   methods: {
     filterClicked: function (userId) {
       this.filtered = userId
+    },
+    formatPrice: function (value) {
+      return value.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
     }
   },
   data: function () {

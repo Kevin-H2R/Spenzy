@@ -11,7 +11,7 @@
             >
               <v-card tile
                 class="home-dashboard__item"
-                to="/group"
+                :to="'/group/' + item.id"
                 hover
                 height="150px"
               >
@@ -37,6 +37,8 @@
 <script>
 import AddCardModal from '@/components/AddCardModal'
 import { EventBus } from '@/js/eventbus'
+import axios from 'axios'
+import { api } from '@/js/config'
 
 export default {
   name: 'home-dashboard',
@@ -45,21 +47,19 @@ export default {
     EventBus.$on('add-card-event', (data) => {
       this.items.push({name: data, personCount: 0})
     })
+
+    axios.get(api + '/parties')
+    .then((response) => {
+      this.items = response.data
+    })
+    .catch(function (error) {
+      console.log(error)
+    })
   },
   data: function () {
     return {
       fab: false,
-      items: [
-        {name: 'Hello', personCount: 6},
-        {name: 'Hello', personCount: 6},
-        {name: 'Hello', personCount: 6},
-        {name: 'Hello', personCount: 6},
-        {name: 'Hello', personCount: 6},
-        {name: 'Hello', personCount: 6},
-        {name: 'Hello', personCount: 6},
-        {name: 'Hello', personCount: 6},
-        {name: 'World', personCount: 12}
-      ]
+      items: []
     }
   }
 }

@@ -8,7 +8,7 @@
         <v-icon>{{ displayedToolbarIcon }}</v-icon>
       </v-btn>
       <v-toolbar-items>
-        <v-btn class="toolbar__button" flat to="/">{{ title }}</v-btn>
+        <router-link class="toolbar__link" to="/">{{ title }}</router-link>
       </v-toolbar-items>
       <v-spacer></v-spacer>
     </v-toolbar>
@@ -19,7 +19,7 @@
       disable-resize-watcher
     >
       <v-list subheader>
-        <v-list-tile to="/">
+        <v-list-tile to="/" @click="drawer = false">
           <v-list-tile-action>
             <v-icon>home</v-icon>
           </v-list-tile-action>
@@ -32,21 +32,24 @@
         <v-subheader>Groups</v-subheader>
         <v-list-tile
           v-for="(item, index) in items" :key="index"
-          to="/group"
+          :to="'/group/' + item.id"
+          @click="drawer = false"
         >
           <v-list-tile-content>
             <v-list-tile-title>{{ item.name }}</v-list-tile-title>
           </v-list-tile-content>
           
-          <v-list-tile-content class="navigation-drawer__person-count">
+          <v-list-tile-content>
             <v-list-tile-title class="navigation-drawer__person-count">
               {{ item.personCount }}
             </v-list-tile-title>
           </v-list-tile-content>
 
-          <v-list-tile-action>
-            <v-icon>face</v-icon>
-          </v-list-tile-action>
+          <v-list-tile-content class="navigation-drawer__person-icon">
+            <v-list-tile-action>
+              <v-icon>face</v-icon>
+            </v-list-tile-action>
+          </v-list-tile-content>
 
         </v-list-tile>
       </v-list>
@@ -65,51 +68,66 @@
 
 <script>
 import { EventBus } from '@/js/eventbus'
+import axios from 'axios'
+import { api } from '@/js/config'
 export default {
   created: function () {
     EventBus.$on('add-card-event', (data) => {
       this.items.push({name: data, personCount: 0})
     })
+
+    axios.get(api + '/parties')
+    .then((response) => {
+      this.items = response.data
+    })
+    .catch(function (error) {
+      console.log(error)
+    })
   },
   computed: {
     displayedToolbarIcon: function () {
-      return this.drawer ? 'arrow_back_ios' : 'menu'
+      return this.drawer ? 'keyboard_arrow_left' : 'menu'
     }
   },
   data () {
     return {
-      title: 'Spenzy',
+      title: 'SPENZY',
       drawer: false,
-      items: [
-        {name: 'Hello', personCount: 6},
-        {name: 'Hello', personCount: 6},
-        {name: 'Hello', personCount: 6},
-        {name: 'Hello', personCount: 6},
-        {name: 'Hello', personCount: 6},
-        {name: 'Hello', personCount: 6},
-        {name: 'Hello', personCount: 6},
-        {name: 'Hello', personCount: 6},
-        {name: 'World', personCount: 12}
-      ]
+      items: []
     }
   },
   name: 'App'
 }
 </script>
 <style>
+
+  .navigation-drawer__person-icon .v-list__tile__action {
+    min-width: 10px;
+  }
+
+  .list__tile--active .list__tile__action .icon {
+    color: inherit;
+  }
+
   input[type=number]::-webkit-inner-spin-button, 
   input[type=number]::-webkit-outer-spin-button { 
     -webkit-appearance: none; 
     margin: 0; 
   }
 
-  .toolbar__button::before {
-    opacity: 0;
+  .toolbar__link {
+    color: white;
+    text-decoration: none;
+    align-self: center
   }
 
   .navigation-drawer__person-count {
     text-align: right;
-    color: white;
+  }
+
+  .navigation-drawer__person-icon {
+    flex-grow: 0;
+    margin-left: 5px;
   }
 </style>
 

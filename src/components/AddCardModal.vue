@@ -39,6 +39,8 @@
 </template>
 <script>
 import { EventBus } from '@/js/eventbus'
+import axios from 'axios'
+import { api } from '@/js/config'
 
 export default {
   name: 'add-card-modal',
@@ -47,6 +49,14 @@ export default {
       if (!this.$refs.form.validate()) {
         return
       }
+      axios.post(api + '/parties', {
+        name: this.name
+      })
+      .then((response) => {
+      })
+      .catch((error) => {
+        console.log(error)
+      })
       EventBus.$emit('add-card-event', this.name)
       this.dialog = false
       this.name = null

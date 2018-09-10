@@ -12,7 +12,7 @@
             </transition>
           </v-flex>
           <v-flex xs12 sm8 offset-sm2>
-            <add-member-modal />
+            <add-member-modal :partyId="parseInt(this.$route.params.id)"/>
           </v-flex>
         </v-layout>
       </v-container>
@@ -35,6 +35,8 @@ import AddSpendingModal from '@/components/AddSpendingModal'
 import DebtList from '@/components/DebtList'
 import { EventBus } from '@/js/eventbus'
 import AddMemberModal from '@/components/AddMemberModal'
+import axios from 'axios'
+import { api } from '@/js/config'
 
 export default {
   name: 'group-page',
@@ -47,7 +49,7 @@ export default {
     EventBus.$on('add-member-to-group-event', (data) => {
       // API CALL Add member to group
       this.items.push({
-        id: this.items[this.items.length - 1].id + 1,
+        id: data.id,
         name: data.name,
         img: 'https://yt3.ggpht.com/a-/ACSszfH-TGySV8bcz1a_rF-2cS0XVvkDEaA27r6qwQ=s900-mo-c-c0xffffffff-rj-k-no',
         spendings: [],
@@ -63,6 +65,14 @@ export default {
         this.items.splice(this.items.indexOf(item[0]), 1)
       }, 300)
     })
+
+    axios.get(`${api}/parties/${this.$route.params.id}`)
+    .then((response) => {
+      this.items = response.data
+    })
+    .catch((error) => {
+      console.log(error)
+    })
   },
   computed: {
     spenzierArray: function () {
@@ -71,64 +81,7 @@ export default {
   },
   data: function () {
     return {
-      items: [
-        {
-          id: 1,
-          name: 'Pierre',
-          img: 'https://yt3.ggpht.com/a-/ACSszfH-TGySV8bcz1a_rF-2cS0XVvkDEaA27r6qwQ=s900-mo-c-c0xffffffff-rj-k-no',
-          spendings: [
-            { title: 'Courses auchan', amount: 125.39, date: '25/08/2018' },
-            { title: 'Courses carrefour', amount: 12.25, date: '26/08/2018' },
-            { title: 'Courses leclerc', amount: 45, date: '27/08/2018' },
-            { title: 'Courses casino', amount: 12.89, date: '28/08/2018' },
-            { title: 'Courses super u', amount: 21.02, date: '29/08/2018' },
-            { title: 'Courses intermarché', amount: 42, date: '23/08/2018' }
-          ],
-          visible: true
-        },
-        {
-          id: 2,
-          name: 'Jean',
-          img: 'https://yt3.ggpht.com/a-/ACSszfH-TGySV8bcz1a_rF-2cS0XVvkDEaA27r6qwQ=s900-mo-c-c0xffffffff-rj-k-no',
-          spendings: [
-            { title: 'Courses auchan', amount: 125.35, date: '25/08/2018' },
-            { title: 'Courses carrefour', amount: 12.25, date: '26/08/2018' },
-            { title: 'Courses leclerc', amount: 45, date: '27/08/2018' },
-            { title: 'Courses casino', amount: 12.89, date: '28/08/2018' },
-            { title: 'Courses super u', amount: 21.02, date: '29/08/2018' },
-            { title: 'Courses intermarché', amount: 42, date: '23/08/2018' }
-          ],
-          visible: true
-        },
-        {
-          id: 3,
-          name: 'Yves',
-          img: 'https://yt3.ggpht.com/a-/ACSszfH-TGySV8bcz1a_rF-2cS0XVvkDEaA27r6qwQ=s900-mo-c-c0xffffffff-rj-k-no',
-          spendings: [],
-          visible: true
-        },
-        {
-          id: 4,
-          name: 'Kevin',
-          img: 'https://yt3.ggpht.com/a-/ACSszfH-TGySV8bcz1a_rF-2cS0XVvkDEaA27r6qwQ=s900-mo-c-c0xffffffff-rj-k-no',
-          spendings: [],
-          visible: true
-        },
-        {
-          id: 5,
-          name: 'Jacques',
-          img: 'https://yt3.ggpht.com/a-/ACSszfH-TGySV8bcz1a_rF-2cS0XVvkDEaA27r6qwQ=s900-mo-c-c0xffffffff-rj-k-no',
-          spendings: [],
-          visible: true
-        },
-        {
-          id: 6,
-          name: 'Adrien',
-          img: 'https://yt3.ggpht.com/a-/ACSszfH-TGySV8bcz1a_rF-2cS0XVvkDEaA27r6qwQ=s900-mo-c-c0xffffffff-rj-k-no',
-          spendings: [],
-          visible: true
-        }
-      ],
+      items: [],
       modalVisible: false
     }
   }

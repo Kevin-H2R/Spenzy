@@ -6,9 +6,8 @@ import GroupPage from '@/components/GroupPage'
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
   relative: true,
-  base: '/spenzy',
+  base: 'spenzy',
   routes: [
     {
       path: '/',
@@ -16,7 +15,7 @@ export default new Router({
       component: HomeDashboard
     },
     {
-      path: '/group',
+      path: '/group/:id',
       name: 'GroupPage',
       component: GroupPage
     }

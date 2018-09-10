@@ -38,10 +38,18 @@
 <script>
 import ImageUploader from '@/components/utils/ImageUploader'
 import { EventBus } from '@/js/eventbus'
+import axios from 'axios'
+import { api } from '@/js/config'
 
 export default {
   name: 'add-member-modal',
   components: { ImageUploader },
+  props: {
+    partyId: {
+      type: Number,
+      required: true
+    }
+  },
   created: function () {
     EventBus.$on('member-image-uploaded-event', (data) => {
       this.imageData = data
@@ -52,12 +60,19 @@ export default {
       if (!this.$refs.form.validate()) {
         return
       }
-      this.dialog = false
-      EventBus.$emit('add-member-to-group-event', {
+      axios.post(`${api}/members`, {
         name: this.memberName,
-        imageData: this.imageData
+        party: this.partyId
       })
-      this.$refs.form.reset()
+      .then((response) => {
+        this.dialog = false
+        EventBus.$emit('add-member-to-group-event', {
+          id: response.data.id,
+          name: this.memberName,
+          imageData: this.imageData
+        })
+        this.$refs.form.reset()
+      })
     }
   },
   data: function () {

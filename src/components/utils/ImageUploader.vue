@@ -8,6 +8,7 @@
         v-model='imageName'
         prepend-icon='attach_file'
         :rules="[v => !!v || 'You need to upload an image']"
+        lazy-validation
       />
       <input
         type="file"

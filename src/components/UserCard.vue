@@ -28,9 +28,11 @@
                       <v-list-tile-title>{{ item.title }}</v-list-tile-title>
                       <v-list-tile-sub-title>{{ item.date }}</v-list-tile-sub-title>
                     </v-list-tile-content>
-                    <v-list-tile-avatar>
-                      {{ item.amount }}€
-                    </v-list-tile-avatar>
+                    <v-list-tile-content class="user-card__list-amount-container">
+                      <v-list-tile-title class="user-card__list-amount">
+                        {{ formatPrice(item.amount) }}€
+                      </v-list-tile-title>
+                    </v-list-tile-content>
                   </v-list-tile>
                   <v-divider v-if="index < spendings.length - 1"/>
                 </div>
@@ -83,6 +85,9 @@ export default {
     selfDelete: function () {
       // API CALL DELETE MEMBER
       EventBus.$emit('delete-member-event', this.id)
+    },
+    formatPrice: function (value) {
+      return value.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
     }
   },
   data: function () {
@@ -125,6 +130,14 @@ export default {
 
   .user-card__container {
     padding-bottom: 10px;
+  }
+
+  .user-card__list-amount-container {
+    flex-shrink: 0;
+  }
+  
+  .user-card__list-amount {
+    text-align: right;
   }
 </style>
 
