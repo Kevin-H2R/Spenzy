@@ -8,7 +8,7 @@
         transition="scale-transition" origin="center center"
         @click="selfDelete"
       >
-        <v-icon>delete</v-icon>
+        <v-icon color="red lighten-1">delete_outline</v-icon>
       </v-btn>
     </v-fab-transition>
     <v-container class="user-card__container">
