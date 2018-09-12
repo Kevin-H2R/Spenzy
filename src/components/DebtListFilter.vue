@@ -62,6 +62,11 @@ export default {
       required: true
     }
   },
+  watch: {
+    participatingUsers: function (newValue, oldValue) {
+      this.users = newValue
+    }
+  },
   methods: {
     remove (item) {
       const index = this.filteredUsers.indexOf(item.id)
