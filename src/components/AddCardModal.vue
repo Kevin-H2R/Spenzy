@@ -20,6 +20,7 @@
           <v-container>
             <v-layout column align-center>
                 <v-text-field
+                  autofocus
                   v-model="name"
                   label="Name"
                   outline

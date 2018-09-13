@@ -23,6 +23,7 @@
                 </v-flex>
                 <v-flex xs12 sm6>
                   <v-text-field
+                    autofocus
                     label="Title"
                     v-model="title"
                     prepend-icon="title"

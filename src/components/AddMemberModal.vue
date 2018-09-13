@@ -18,6 +18,7 @@
                   </v-flex>
                   <v-flex xs12>
                     <v-text-field prepend-icon="label" label="Name"
+                      autofocus
                       v-model="memberName"
                       :rules="[v => !!v || 'Give the member a name']"
                     />
