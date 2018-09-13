@@ -1,41 +1,46 @@
 <template>
-  <v-layout row wrap align-center>
-    <v-flex xs12 md8 lg8>
-      <v-container fluid grid-list-sm class="group-page__grid-container">
-        <v-layout row wrap>
-          <v-flex
-            v-if="loading"
-            v-for="i in 4"
-            :key="i"
-            xs12 sm6
-          >
-            <loading-area :height="225" />
-          </v-flex>
-          <v-flex
-            v-for="(item, index) in items" :key="index"
-            xs12 sm6
-          >
-            <transition name="remove-member">
-              <user-card v-bind="item" v-show="item.visible"/>
-            </transition>
-          </v-flex>
-          <v-flex xs12 sm8 offset-sm2>
-            <add-member-modal :partyId="parseInt(this.$route.params.id)"/>
-          </v-flex>
-        </v-layout>
-      </v-container>
-    </v-flex>
-    <v-flex xs12 md4 lg3 offset-lg1>
-      <v-card>
-        <v-container>
-          <v-layout column align-center>
-            <debt-list :debtItems="items"/>
-          </v-layout>
-        </v-container>
-      </v-card>
-    </v-flex>
-    <add-spending-modal :spenzierArray="spenzierArray"/>
-  </v-layout>  
+  <v-layout column>
+    <v-layout row wrap align-center>
+        <v-flex xs12 md8>
+          <v-container fluid grid-list-sm>
+            <v-layout row wrap>
+              <v-flex
+                v-if="loading"
+                v-for="i in 4"
+                :key="i"
+                xs12 sm6
+              >
+                <loading-area :height="225" />
+              </v-flex>
+              <v-flex
+                v-for="(item, index) in items" :key="index"
+                xs12 sm6
+              >
+                <transition name="remove-member">
+                  <user-card v-bind="item" v-show="item.visible"/>
+                </transition>
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </v-flex>
+        <v-flex xs12 md4 lg3 offset-lg1>
+          <v-card>
+            <v-container>
+              <v-layout column align-center>
+                <debt-list :debtItems="items"/>
+              </v-layout>
+            </v-container>
+          </v-card>
+        </v-flex>
+        <add-spending-modal :spenzierArray="spenzierArray"/>
+      </v-layout>  
+      <v-layout row>
+        <v-flex xs12 md4 offset-md2>
+          <add-member-modal :partyId="parseInt(this.$route.params.id)"/>
+        </v-flex>
+      </v-layout>
+  </v-layout>
+  
 </template>
 <script>
 import UserCard from '@/components/UserCard'
@@ -99,10 +104,6 @@ export default {
 }
 </script>
 <style scoped>
-  .group-page__grid-container {
-    padding-top: 0;
-  }
-  
   .remove-member-leave-to {
     transition: all ease-in-out 300ms;
     opacity: 0;

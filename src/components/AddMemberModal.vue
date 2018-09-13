@@ -3,7 +3,7 @@
     <v-dialog v-model="dialog" max-width="500px">
       <v-btn slot="activator" color="pink" dark>
         Add member
-        <v-icon right>add_to_queue</v-icon>
+        <v-icon right>person_add</v-icon>
       </v-btn>
       <v-card>
         <v-form ref="form" v-model="valid" lazy-validation>
