@@ -3,6 +3,7 @@
     class="loading-area"
     v-bind:class="{'loading-area__marged': marged}"
     tile
+    flat
   >
   </v-card>  
 </template>

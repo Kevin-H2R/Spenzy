@@ -17,7 +17,7 @@
                 xs12 sm6
               >
                 <transition name="remove-member">
-                  <user-card v-bind="item" v-show="item.visible"/>
+                  <user-card v-bind="item"/>
                 </transition>
               </v-flex>
             </v-layout>
