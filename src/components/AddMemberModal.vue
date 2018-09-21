@@ -72,8 +72,13 @@ export default {
           name: this.memberName,
           imageData: this.imageData
         })
-        this.$refs.form.reset()
       })
+    }
+  },
+  watch: {
+    dialog: function () {
+      this.imageData = null
+      this.$refs.form.reset()
     }
   },
   data: function () {

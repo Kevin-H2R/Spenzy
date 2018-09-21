@@ -15,7 +15,7 @@ export default new Router({
       component: HomeDashboard
     },
     {
-      path: '/group/:id',
+      path: '/parties/:id',
       name: 'GroupPage',
       component: GroupPage
     }

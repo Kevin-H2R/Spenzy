@@ -10,7 +10,7 @@
               :key="i"
               xs12 sm6 md4 lg3
             >
-              <loading-area marged/>
+              <loading-area margin="4px 8px"/>
             </v-flex>
             <v-flex
               v-for="(item, index) in items"
@@ -18,8 +18,9 @@
               xs12 sm6 md4 lg3
             >
               <v-card tile
+                color="grey darken-2"
                 class="home-dashboard__item"
-                :to="'/group/' + item.id"
+                :to="'/parties/' + item.id"
                 hover
                 height="150px"
               >
@@ -77,11 +78,11 @@ export default {
 <style scoped>
   .home-dashboard__item {
     margin: 4px 8px;
-    background: #545454;
   }
 
   .home-dashboard__item-title {
     font-size: 24px;
+    text-align: center;
   }
 
   .home-dashboard__count-container {

@@ -64,6 +64,11 @@ export default {
       this.$refs.form.reset()
     }
   },
+  watch: {
+    dialog: function () {
+      this.$refs.form.reset()
+    }
+  },
   data: function () {
     return {
       dialog: false,

@@ -1,5 +1,9 @@
 <template>
-  <v-card class="user-card" @mouseover="hovered = true" @mouseout="hovered = false">
+  <v-card class="user-card"
+    @mouseover="hovered = true"
+    @mouseout="hovered = false"
+    color="grey darken-2"
+  >
     <v-fab-transition>
       <v-btn
       class="user-card__delete-member-button"
@@ -107,7 +111,6 @@ export default {
 <style scoped>
 
   .user-card {
-    background: #545454;
     cursor: pointer;
   }
 

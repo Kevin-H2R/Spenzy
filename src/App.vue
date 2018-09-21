@@ -32,7 +32,7 @@
         <v-subheader>Groups</v-subheader>
         <v-list-tile
           v-for="(item, index) in items" :key="index"
-          :to="'/group/' + item.id"
+          :to="'/parties/' + item.id"
           @click="drawer = false"
         >
           <v-list-tile-content>

@@ -23,7 +23,7 @@
             </v-layout>
           </v-container>
         </v-flex>
-        <v-flex xs12 md4 lg3 offset-lg1>
+        <v-flex xs12 md4>
           <v-card>
             <v-container>
               <v-layout column align-center>

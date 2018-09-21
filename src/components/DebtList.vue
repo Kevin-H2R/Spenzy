@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-flex xs12>
     <debt-list-filter :participatingUsers="items"/>
     <v-list two-line>
       <span v-for="(item, index) in getDebtList" :key="index">
@@ -34,7 +34,7 @@
         <v-divider v-if="index < getDebtList.length - 1"/>
       </span>
     </v-list>
-  </div>
+  </v-flex>
 </template>
 <script>
 import DebtListFilter from '@/components/DebtListFilter'
@@ -85,7 +85,10 @@ export default {
       })
 
       let resultActions = []
-      let positiveUsers = userTotalDue.filter(data => data.due > 0)
+      let positiveUsers = userTotalDue.filter(data => data.due > 0).map(data => {
+        data.due = Number.parseFloat(data.due)
+        return data
+      })
       let negativeUsers = userTotalDue.filter(data => data.due < 0).map(data => {
         data.due = Math.abs(data.due)
         return data

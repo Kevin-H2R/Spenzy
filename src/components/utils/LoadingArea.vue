@@ -1,9 +1,10 @@
 <template>
   <v-card :height="`${this.height}px`"
     class="loading-area"
-    v-bind:class="{'loading-area__marged': marged}"
     tile
     flat
+    :style="{margin: this.margin}"
+    color="grey darken-2"
   >
   </v-card>  
 </template>
@@ -16,10 +17,10 @@ export default {
       required: false,
       default: 150
     },
-    marged: {
-      type: Boolean,
+    margin: {
+      type: String,
       required: false,
-      default: false
+      default: '0'
     }
   }
 }
@@ -39,11 +40,6 @@ export default {
     animation-name: loadingArea;
     animation-iteration-count: infinite;
     animation-direction: alternate;
-    background: #545454;
-  }
-
-  .loading-area__marged {
-    margin: 4px 8px;
   }
 </style>
 
